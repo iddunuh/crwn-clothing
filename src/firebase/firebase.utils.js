@@ -11,6 +11,7 @@ import {
 	GoogleAuthProvider,
 	signInWithPopup,
 	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
 } from "firebase/auth";
 
 const config = {
@@ -28,7 +29,7 @@ export const createUserProfileDocument = async (userAuth, additionalData) => {
 	const snapshot = await getDoc(userRef);
 
 	if (!snapshot.exists()) {
-		const { displayName, email, uid } = userAuth;
+		const { displayName, email } = userAuth;
 		const createdAt = new Date();
 
 		try {
@@ -52,5 +53,9 @@ provider.setCustomParameters({ prompt: "select_account" });
 
 export const auth = getAuth(app);
 export const firestore = getFirestore(app);
-export { onSnapshot, createUserWithEmailAndPassword };
+export {
+	onSnapshot,
+	createUserWithEmailAndPassword,
+	signInWithEmailAndPassword,
+};
 export const signInWithGoogle = () => signInWithPopup(auth, provider);
